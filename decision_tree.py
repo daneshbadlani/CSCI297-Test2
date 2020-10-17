@@ -1,16 +1,19 @@
 """
-Name: Danesh Badlani, Sam Bluestone and Leslie Le
+Name: Leslie Le
 Date: 10/16/2020
 
 decision_tree.py
+v1..Attempt of a comparison between GRE and TOEFL
+....Does not work - ValueError: Unknown label type: 'continuous'
 """
 
 import numpy as np
+from sklearn import datasets
 from sklearn import tree
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.tree import export_graphviz
 from matplotlib.colors import ListedColormap
@@ -21,15 +24,15 @@ import pandas as pd
 # Be sure to plot the tree and explain how the features are used
 # Tells whether the random forest or the decision tree performed better and why
 
-df = pd.read_csv('Admission_Predict.csv')
+df = pd.read_csv('Admission_Predict.csv',
+                 header=0,
+                 sep=',')
+df.dropna(inplace=True)
 
-df.columns = ["GRE", "TOEFL", "UR", "SOP", "LOR",
-              "CGPA", "RES", "COA", "RACE", "SES"]
-
-cols = ['','']
+cols = ['GRE Score','TOEFL Score']
 
 X = df[cols]
-y = df['']
+y = df['Chance of Admit ']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, 
                                                     random_state=1)
@@ -81,41 +84,6 @@ def plot_decision_regions(X, y, classifier, test_idx=None, resolution=0.02):
                     s=100, 
                     label='test set')
 
-def gini(p):
-    return p * (1 - p) + (1 - p) * (1 - (1 - p))
-
-def entropy(p):
-    return - p * np.log2(p) - (1 - p) * np.log2((1 - p))
-
-def error(p):
-    return 1 - np.max([p, 1 - p])
-
-x = np.arange(0.0, 1.0, 0.01)
-
-ent = [entropy(p) if p != 0 else None for p in x]
-sc_ent = [e * 0.5 if e else None for e in ent]
-err = [error(i) for i in x]
-
-fig = plt.figure()
-ax = plt.subplot(111)
-for i, lab, ls, c, in zip([ent, sc_ent, gini(x), err], 
-                          ['Entropy', 'Entropy (scaled)', 
-                           'Gini impurity', 'Misclassification error'],
-                          ['-', '-', '--', '-.'],
-                          ['black', 'lightgray', 'red', 'green', 'cyan']):
-    line = ax.plot(x, i, label=lab, linestyle=ls, lw=2, color=c)
-
-ax.legend(loc='upper center', bbox_to_anchor=(0.5, 1.15),
-          ncol=5, fancybox=True, shadow=False)
-
-ax.axhline(y=0.5, linewidth=1, color='k', linestyle='--')
-ax.axhline(y=1.0, linewidth=1, color='k', linestyle='--')
-plt.ylim([0, 1.1])
-plt.xlabel('p(i=1)')
-plt.ylabel('impurity index')
-#plt.savefig('images/03_19.png', dpi=300, bbox_inches='tight')
-plt.show()
-
 # ## Building a decision tree
 tree_model = DecisionTreeClassifier(criterion='gini', 
                                     max_depth=4, 
@@ -128,8 +96,8 @@ plot_decision_regions(X_combined, y_combined,
                       classifier=tree_model,
                       test_idx=range(105, 150))
 
-plt.xlabel('')
-plt.ylabel('')
+plt.xlabel('GRE Score')
+plt.ylabel('TOEFL Score')
 plt.legend(loc='upper left')
 plt.tight_layout()
 #plt.savefig('images/03_20.png', dpi=300)
@@ -144,8 +112,8 @@ dot_data = export_graphviz(tree_model,
                            rounded=True,
                            class_names=['Admitted', 
                                         'Not admitted'],
-                           feature_names=['', 
-                                          ''],
+                           feature_names=['GRE Score', 
+                                          'TOEFL Score'],
                            out_file=None) 
 graph = graph_from_dot_data(dot_data) 
 #graph.write_png('tree.png') 
