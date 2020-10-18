@@ -27,7 +27,7 @@ y = df['CoA']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state=1)
 
-# chose 0.82 because it is the 3rd quartile of chance of admission
+# chose 0.82 because it is the 3rd quartile for chance of admission
 ty_train=[1 if CoA > 0.82 else 0 for CoA in y_train] # learned from internet
 ty_train=np.array(ty_train)
 
