@@ -52,14 +52,30 @@ kfold = model_selection.KFold(n_splits=10)
 cv_results = model_selection.cross_val_score(GaussianNB(), X_train_std, ty_train, cv=kfold, scoring='accuracy')
 #displaying the mean and standard deviation of the prediction
 print("%s: %f %s: (%f)" % ('Naive Bayes accuracy', cv_results.mean(), '\nNaive Bayes StdDev', cv_results.std()))
-
+print()
 #calling the cross validation function
 cv_results = model_selection.cross_val_score(GaussianNB(), X_train_std, ty_train, cv=kfold, scoring='precision')
 #displaying the mean and standard deviation of the prediction
 print("%s: %f %s: (%f)" % ('Naive Bayes precision', cv_results.mean(), '\nNaive Bayes StdDev', cv_results.std()))
+print()
+#calling the cross validation function
+cv_results = model_selection.cross_val_score(GaussianNB(), X_train_std, ty_train, cv=kfold, scoring='recall')
+#displaying the mean and standard deviation of the prediction
+print("%s: %f %s: (%f)" % ('Naive Bayes recall', cv_results.mean(), '\nNaive Bayes StdDev', cv_results.std()))
 
+print()
+#calling the cross validation function
+cv_results = model_selection.cross_val_score(GaussianNB(), X_train_std, ty_train, cv=kfold, scoring='f1')
+#displaying the mean and standard deviation of the prediction
+print("%s: %f %s: (%f)" % ('Naive Bayes F1', cv_results.mean(), '\nNaive Bayes StdDev', cv_results.std()))
 # Naive Bayes accuracy: 0.926108 
 # Naive Bayes StdDev: (0.048931)
 
 # Naive Bayes precision: 0.754275 
 # Naive Bayes StdDev: (0.155794)
+
+# Naive Bayes recall: 0.904762 
+# Naive Bayes StdDev: (0.145997)
+
+# Naive Bayes F1: 0.817904 
+# Naive Bayes StdDev: (0.139074)
