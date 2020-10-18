@@ -33,7 +33,7 @@ sc.fit(X_train)
 X_train_std = sc.transform(X_train)
 X_test_std = sc.transform(X_test)
 
-# Chose 0.82 because it is the 3rd quartile for chance of admission
+# Chose 0.82 because it is the 3rd quartile for chance of admit
 ty_train=[1 if CoA > 0.82 else 0 for CoA in y_train] # learned from internet
 ty_train=np.array(ty_train)
 
