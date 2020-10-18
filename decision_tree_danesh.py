@@ -12,6 +12,8 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 from sklearn.preprocessing import StandardScaler
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.tree import export_graphviz
+from pydotplus import graph_from_dot_data
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import f1_score
 from sklearn.metrics import precision_score
@@ -41,6 +43,17 @@ ty_test=np.array(ty_test)
 tree_model = DecisionTreeClassifier(criterion='gini', max_depth=2, random_state=1)
 tree_model.fit(X_train, ty_train)
 dt_pred = tree_model.predict(X_test)
+
+dot_data = export_graphviz(tree_model,
+                           filled=True, 
+                           rounded=True,
+                           class_names=['Rejected', 'Admitted'],
+                           feature_names=['GRE', 'TOEFL', 'CGPA'],
+                           out_file=None) 
+graph = graph_from_dot_data(dot_data)
+
+graph.write_png("tree.png")
+
 print("Decision Tree Accuracy: %.3f" % accuracy_score(ty_test, dt_pred))
 print("Decision Tree F1-Score: %.3f" % f1_score(ty_test, dt_pred))
 print("Decision Tree Precision: %.3f" % precision_score(ty_test, dt_pred))
