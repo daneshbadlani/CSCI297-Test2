@@ -33,7 +33,7 @@ sc.fit(X_train)
 X_train_std = sc.transform(X_train)
 X_test_std = sc.transform(X_test)
 
-
+# Chose 0.82 because it is the 3rd quartile for chance of admission
 ty_train=[1 if CoA > 0.82 else 0 for CoA in y_train] # learned from internet
 ty_train=np.array(ty_train)
 
@@ -44,3 +44,4 @@ svm = SVC(kernel='linear', C=1.0, random_state=1)
 svm.fit(X_train_std, ty_train)
 svc_pred = svm.predict(X_test_std)
 print("SVM Accuracy: %.3f" % accuracy_score(ty_test, svc_pred))
+# SVM Accuracy: 0.931
