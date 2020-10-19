@@ -88,7 +88,7 @@ ty_train=np.array(ty_train)
 ty_test=[1 if CoA > 0.82 else 0 for CoA in y_test] #learned from internet
 ty_test=np.array(ty_test)
 
-tree_model = DecisionTreeClassifier(criterion='gini', max_depth=2, random_state=1)
+tree_model = DecisionTreeClassifier(criterion='gini', max_depth=3, random_state=1)
 tree_model.fit(X_train, ty_train)
 dt_pred = tree_model.predict(X_test)
 
@@ -104,7 +104,7 @@ graph.write_png("tree.png")
 
 X_combined_std = np.vstack((X_train[['CGPA', 'TOEFL']], X_test[['CGPA', 'TOEFL']]))
 y_combined = np.hstack((ty_train, ty_test))
-plot_decision_regions(X=X_combined_std, y=y_combined, classifier=DecisionTreeClassifier(criterion='gini', max_depth=2, random_state=1))
+plot_decision_regions(X=X_combined_std, y=y_combined, classifier=DecisionTreeClassifier(criterion='gini', max_depth=3, random_state=1))
 plt.savefig("decision_tree.png")
 plt.show()
 
@@ -112,7 +112,7 @@ print("Decision Tree Accuracy: %.3f" % accuracy_score(ty_test, dt_pred))
 print("Decision Tree F1-Score: %.3f" % f1_score(ty_test, dt_pred))
 print("Decision Tree Precision: %.3f" % precision_score(ty_test, dt_pred))
 print("Decision Tree Recall: %.3f" % recall_score(ty_test, dt_pred))
-# Decision Tree Accuracy: 0.972
-# Decision Tree F1-Score: 0.962
-# Decision Tree Precision: 0.962
-# Decision Tree Recall: 0.962
+# Decision Tree Accuracy: 0.931
+# Decision Tree F1-Score: 0.898
+# Decision Tree Precision: 0.957
+# Decision Tree Recall: 0.846
