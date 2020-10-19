@@ -19,3 +19,4 @@
 
 * Added the initial decision tree and linear regression models
 * Plotting with KNN
+* Small amount of tuning with models
