@@ -87,7 +87,7 @@ ty_train=np.array(ty_train)
 ty_test=[1 if CoA > 0.82 else 0 for CoA in y_test] #learned from internet
 ty_test=np.array(ty_test)
 
-forest = RandomForestClassifier(criterion='gini', n_estimators=25, random_state=1, n_jobs=2)
+forest = RandomForestClassifier(criterion='entropy', n_estimators=25, random_state=1, n_jobs=2)
 forest.fit(X_train, ty_train)
 rf_pred = forest.predict(X_test)
 
