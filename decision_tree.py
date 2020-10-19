@@ -1,47 +1,25 @@
 """
-Name: Leslie Le
-Date: 10/16/2020
-
-decision_tree.py
-v1..Attempt of a comparison between GRE and TOEFL
-....Does not work - ValueError: Unknown label type: 'continuous'
+Name: Danesh Badlani
+Test 2 
+Implementation of Decision Tree
 """
 
-import numpy as np
-from sklearn import datasets
-from sklearn import tree
-from sklearn.metrics import accuracy_score
+# import statements
 from sklearn.model_selection import train_test_split
+import pandas as pd 
+import numpy as np
+import matplotlib.pyplot as plt 
+from matplotlib.colors import ListedColormap
+import tensorflow as tf
 from sklearn.preprocessing import StandardScaler
-from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.tree import export_graphviz
-from matplotlib.colors import ListedColormap
-import matplotlib.pyplot as plt
 from pydotplus import graph_from_dot_data
-import pandas as pd
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import f1_score
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
 
-# Be sure to plot the tree and explain how the features are used
-# Tells whether the random forest or the decision tree performed better and why
-
-df = pd.read_csv('Admission_Predict.csv',
-                 header=0,
-                 sep=',')
-df.dropna(inplace=True)
-
-cols = ['GRE Score','TOEFL Score']
-
-X = df[cols]
-y = df['Chance of Admit ']
-
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, 
-                                                    random_state=1)
-
-# Standardizing the features:
-sc = StandardScaler()
-sc.fit(X_train)
-X_train_std = sc.transform(X_train)
-X_test_std = sc.transform(X_test)
 
 def plot_decision_regions(X, y, classifier, test_idx=None, resolution=0.02):
 
@@ -49,7 +27,7 @@ def plot_decision_regions(X, y, classifier, test_idx=None, resolution=0.02):
     markers = ('s', 'x', 'o', '^', 'v')
     colors = ('red', 'blue', 'lightgreen', 'gray', 'cyan')
     cmap = ListedColormap(colors[:len(np.unique(y))])
-
+    classifier.fit(X, y)
     # plot the decision surface
     x1_min, x1_max = X[:, 0].min() - 1, X[:, 0].max() + 1
     x2_min, x2_max = X[:, 1].min() - 1, X[:, 1].max() + 1
@@ -69,6 +47,7 @@ def plot_decision_regions(X, y, classifier, test_idx=None, resolution=0.02):
                     marker=markers[idx], 
                     label=cl, 
                     edgecolor='black')
+
     # highlight test examples
     if test_idx:
         # plot all examples
@@ -76,7 +55,7 @@ def plot_decision_regions(X, y, classifier, test_idx=None, resolution=0.02):
 
         plt.scatter(X_test[:, 0],
                     X_test[:, 1],
-                    c='none',
+                    c='',
                     edgecolor='black',
                     alpha=1.0,
                     linewidth=1,
@@ -84,36 +63,56 @@ def plot_decision_regions(X, y, classifier, test_idx=None, resolution=0.02):
                     s=100, 
                     label='test set')
 
-# ## Building a decision tree
-tree_model = DecisionTreeClassifier(criterion='gini', 
-                                    max_depth=4, 
-                                    random_state=1)
-tree_model.fit(X_train, y_train)
 
-X_combined = np.vstack((X_train, X_test))
-y_combined = np.hstack((y_train, y_test))
-plot_decision_regions(X_combined, y_combined, 
-                      classifier=tree_model,
-                      test_idx=range(105, 150))
 
-plt.xlabel('GRE Score')
-plt.ylabel('TOEFL Score')
-plt.legend(loc='upper left')
-plt.tight_layout()
-#plt.savefig('images/03_20.png', dpi=300)
-plt.show()
 
-tree.plot_tree(tree_model)
-#plt.savefig('images/03_21_1.pdf')
-plt.show()
+
+#read the data into a pandas dataframe
+df = pd.read_csv('Admission_Predict.csv')
+df.dropna(inplace=True)
+
+
+df.columns = ["No", "GRE", "TOEFL", "UR", "SOP", "LOR", "CGPA", "RES", "CoA", "RACE", "SES"]
+
+
+#print(df.describe())
+X = df[['GRE', 'TOEFL', 'CGPA']]
+y = df['CoA']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state=1)
+
+# chose 0.82 because it is the 3rd quartile for chance of admit
+ty_train=[1 if CoA > 0.82 else 0 for CoA in y_train] # learned from internet
+ty_train=np.array(ty_train)
+
+ty_test=[1 if CoA > 0.82 else 0 for CoA in y_test] #learned from internet
+ty_test=np.array(ty_test)
+
+tree_model = DecisionTreeClassifier(criterion='gini', max_depth=2, random_state=1)
+tree_model.fit(X_train, ty_train)
+dt_pred = tree_model.predict(X_test)
 
 dot_data = export_graphviz(tree_model,
                            filled=True, 
                            rounded=True,
-                           class_names=['Admitted', 
-                                        'Not admitted'],
-                           feature_names=['GRE Score', 
-                                          'TOEFL Score'],
+                           class_names=['Rejected', 'Admitted'],
+                           feature_names=['GRE', 'TOEFL', 'CGPA'],
                            out_file=None) 
-graph = graph_from_dot_data(dot_data) 
-#graph.write_png('tree.png') 
+graph = graph_from_dot_data(dot_data)
+
+graph.write_png("tree.png")
+
+X_combined_std = np.vstack((X_train[['CGPA', 'TOEFL']], X_test[['CGPA', 'TOEFL']]))
+y_combined = np.hstack((ty_train, ty_test))
+plot_decision_regions(X=X_combined_std, y=y_combined, classifier=DecisionTreeClassifier(criterion='gini', max_depth=2, random_state=1))
+plt.savefig("decision_tree.png")
+plt.show()
+
+print("Decision Tree Accuracy: %.3f" % accuracy_score(ty_test, dt_pred))
+print("Decision Tree F1-Score: %.3f" % f1_score(ty_test, dt_pred))
+print("Decision Tree Precision: %.3f" % precision_score(ty_test, dt_pred))
+print("Decision Tree Recall: %.3f" % recall_score(ty_test, dt_pred))
+# Decision Tree Accuracy: 0.972
+# Decision Tree F1-Score: 0.962
+# Decision Tree Precision: 0.962
+# Decision Tree Recall: 0.962
