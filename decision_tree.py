@@ -112,7 +112,7 @@ print("Decision Tree Accuracy: %.3f" % accuracy_score(ty_test, dt_pred))
 print("Decision Tree F1-Score: %.3f" % f1_score(ty_test, dt_pred))
 print("Decision Tree Precision: %.3f" % precision_score(ty_test, dt_pred))
 print("Decision Tree Recall: %.3f" % recall_score(ty_test, dt_pred))
-# Decision Tree Accuracy: 0.972
-# Decision Tree F1-Score: 0.962
-# Decision Tree Precision: 0.962
-# Decision Tree Recall: 0.962
+# Decision Tree Accuracy: 0.931
+# Decision Tree F1-Score: 0.898
+# Decision Tree Precision: 0.957
+# Decision Tree Recall: 0.846
