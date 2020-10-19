@@ -88,7 +88,7 @@ ty_train=np.array(ty_train)
 ty_test=[1 if CoA > 0.82 else 0 for CoA in y_test] #learned from internet
 ty_test=np.array(ty_test)
 
-tree_model = DecisionTreeClassifier(criterion='gini', max_depth=2, random_state=1)
+tree_model = DecisionTreeClassifier(criterion='gini', max_depth=3, random_state=1)
 tree_model.fit(X_train, ty_train)
 dt_pred = tree_model.predict(X_test)
 
@@ -104,7 +104,7 @@ graph.write_png("tree.png")
 
 X_combined_std = np.vstack((X_train[['CGPA', 'TOEFL']], X_test[['CGPA', 'TOEFL']]))
 y_combined = np.hstack((ty_train, ty_test))
-plot_decision_regions(X=X_combined_std, y=y_combined, classifier=DecisionTreeClassifier(criterion='gini', max_depth=2, random_state=1))
+plot_decision_regions(X=X_combined_std, y=y_combined, classifier=DecisionTreeClassifier(criterion='gini', max_depth=3, random_state=1))
 plt.savefig("decision_tree.png")
 plt.show()
 
