@@ -64,8 +64,8 @@ def plot_decision_regions(X, y, classifier, test_idx=None, resolution=0.02):
                     label='test set')
 
 def knn_multiple():
-    for i in [1,2,3,5,10,25,50,95]:
-        knn = KNeighborsClassifier(n_neighbors=i, p=2, metric='minkowski')
+    for i in [1,2,3,4,5,6,7,8,9,10,25,50,95]:
+        knn = KNeighborsClassifier(n_neighbors=i, p=2, metric='chebyshev')
         knn.fit(X_train_std, ty_train)
         knn_pred = knn.predict(X_test_std)
         print()
@@ -104,7 +104,7 @@ ty_train=np.array(ty_train)
 ty_test=[1 if CoA > 0.82 else 0 for CoA in y_test] #learned from internet
 ty_test=np.array(ty_test)
 
-knn = KNeighborsClassifier(n_neighbors=5, p=2, metric='minkowski')
+knn = KNeighborsClassifier(n_neighbors=5, p=2, metric='chebyshev')
 knn.fit(X_train_std, ty_train)
 knn_pred = knn.predict(X_test_std)
 print("k = 5")
