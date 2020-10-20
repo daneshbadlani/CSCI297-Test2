@@ -14,6 +14,7 @@ import sys
 
 #read the data into a pandas dataframe
 df = pd.read_csv('Admission_Predict.csv')
+# df.info()
 df.dropna(inplace=True)
 df_ohe = pd.get_dummies(df['Race'])
 df = df[[i for i in list(df.columns) if i not in ['Serial No.', 'Race']]]
