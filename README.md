@@ -10,11 +10,11 @@ We decided to categorize the 'Race' feature using pandas' get_dummies method whi
 
 ## EDA
 
-There was some missing data and we decided to remove all the missing values using dropna method because we wanted to keep only original values instead of imputating it. After removing all the missing values, we were left with 356 rows to deal with eradicating only about 10% of initial data. We found out that there was a positive corelation between 'GRE' and 'TOEFL' scores as well as 'GRE' and 'CGPA'. We decided to use the 'GRE', 'TOEFL', and 'CGPA' features for our models because those three features were the most highly coorelated features compared to the others with 'Chance of Admit', with the coorelation scores of 0.80, 0.79 and 0.87 respectively.
+There was some missing data and we decided to remove all the missing values using dropna method because we wanted to keep only original values instead of imputating it. After removing all the missing values, we were left with 356 rows to deal with eradicating only about 10% of initial data. We found out that there was a positive corelation between 'GRE' and 'TOEFL' scores as well as 'GRE' and 'CGPA'. We decided to use the 'GRE', 'TOEFL', and 'CGPA' features for our models because those three features were the most highly coorelated features compared to the others with 'Chance of Admit', with the coorelation scores of 0.80, 0.79 and 0.87 respectively. We split the dataset into 80% train data and 20% test data using the train_test_split function. 
 
 ### Problematic or Biased Features?
 
-The 'Race' feature was problematic as well because it was a categorical variable, so you should not carelessly assign values (such as 1, 2, etc.) to each category. If you do this, it will skew the coorelation values. The correlation matrix confirmed this, showing that none of the races had any correlation with 'Chance of Admit'.
+The 'Race' feature is problematic because it is a categorical variable, so you should not carelessly assign values (such as 1, 2, etc.) to each category. If you do this, it will skew the coorelation values. The correlation matrix confirmed this, showing that none of the races had any correlation with 'Chance of Admit'.
 
 The only model that did not throw out these features was Naive Bayes because the Naive Bayes model assumes that all features are independent. Thus, the correlation between features is not important in determining whether or not to include them in the final model.
 
