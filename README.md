@@ -14,8 +14,6 @@ There was some missing data and we decided to remove all the missing values usin
 
 ### Problematic or Biased Features?
 
-Some problematic features were when we didn't have a certain feature for a subject. For example, in the given csv file, we have a missing feature in the Chance of Admit feature. We also have missing data from subjects about their race, so what our group did was we discarded the subjects that did not have all the data.
-
 The 'Race' feature was problematic as well because it was a categorical variable, so you should not carelessly assign values (such as 1, 2, etc.) to each category. If you do this, it will skew the coorelation values. The correlation matrix confirmed this, showing that none of the races had any correlation with 'Chance of Admit'.
 
 The only model that did not throw out these features was Naive Bayes because the Naive Bayes model assumes that all features are independent. Thus, the correlation between features is not important in determining whether or not to include them in the final model.
