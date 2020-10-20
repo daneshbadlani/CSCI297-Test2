@@ -10,7 +10,7 @@ We decided to categorize the 'Race' feature using pandas' get_dummies method whi
 
 ## EDA
 
-There was some missing data and we decided to remove all the missing values using dropna method because we wanted to keep only original values instead of imputating it. After removing all the missing values, we were left with 356 rows to deal with eradicating only about 10% of initial data. We decided to use the 'GRE', 'TOEFL', and 'CGPA' features because those three features were the most highly coorelated features compared to the others, with the coorelation hovering around 0.82 or 0.83.
+There was some missing data and we decided to remove all the missing values using dropna method because we wanted to keep only original values instead of imputating it. After removing all the missing values, we were left with 356 rows to deal with eradicating only about 10% of initial data. We found out that there was a positive corelation between 'GRE' and 'TOEFL' scores. We decided to use the 'GRE', 'TOEFL', and 'CGPA' features because those three features were the most highly coorelated features compared to the others, with the coorelation hovering around 0.82 or 0.83.
 
 ### Problematic or Biased Features?
 
