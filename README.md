@@ -4,13 +4,13 @@ Danesh Badlani, Sam Bluestone, and Leslie Le
 
 ## Design Decisions
 
-For the data to help with classification, we decided to binarize the 'Chance of Admit ' feature by setting a threshold at 0.82. If the feature were above that threshold, it would b e categorized as 1, and if not, it will be 0. The threshold of 0.82 was chosen because it represents the thrid quartile of the data.
+For the data to help with classification, we decided to binarize the 'Chance of Admit ' feature by setting a threshold at 0.82. If the feature were above that threshold, it would be categorized as 1, and if not, it will be 0. The threshold of 0.82 was chosen because it represents the thrid quartile of the feature.
 
 We decided to categorize the 'Race' feature using pandas' get_dummies method which allows us to pass in a column of a DataFrame as a parameter and converts each value in that column to its own separate column. For example, if the subject is White, the new 'White' column will measure to 1, and the rest of the new columns (latinx, African American, Asian) will be 0.
 
 ## EDA
 
-We decided to use the 'GRE', 'TOEFL', and 'CGPA' features because those three features were the most highly coorelated features compared to the others, with the coorelation hovering around 0.82 or 0.83.
+There was some missing data and we decided to remove all the missing values using dropna method because we wanted to keep only original values instead of imputating it. After removing all the missing values, we were left with 356 rows to deal with eradicating only about 10% of initial data. We decided to use the 'GRE', 'TOEFL', and 'CGPA' features because those three features were the most highly coorelated features compared to the others, with the coorelation hovering around 0.82 or 0.83.
 
 ### Problematic or Biased Features?
 
