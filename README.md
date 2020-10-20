@@ -20,6 +20,12 @@ The only model that did not throw out these features was Naive Bayes because the
 
 ## Results
 
+#### Linear Regression
+- Slope: 0.002
+- Intercept: -1.606
+- R^2 Score: 0.776
+- MSE: 0.040
+
 #### Logistic Regression
 
 - Logistic Regression Accuracy: 0.958
