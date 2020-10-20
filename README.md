@@ -4,7 +4,7 @@ Danesh Badlani, Sam Bluestone, and Leslie Le
 
 ## Design Decisions
 
-For the data to help with classification, we decided to binarize the 'Chance of Admit ' feature by setting a threshold at 0.82. If the feature were above that threshold, it would b e categorized as 1, and if not, it will be 0. The threshold of 0.82 was chosen because it represents the thrid quartile of the data.
+For the data to help with classification, we decided to binarize the 'Chance of Admit ' feature by setting a threshold at 0.82. If the feature were above that threshold, it would be categorized as 1, and if not, it will be 0. The threshold of 0.82 was chosen because it represents the thrid quartile of the data.
 
 We decided to categorize the 'Race' feature using pandas' get_dummies method which allows us to pass in a column of a DataFrame as a parameter and converts each value in that column to its own separate column. For example, if the subject is White, the new 'White' column will measure to 1, and the rest of the new columns (latinx, African American, Asian) will be 0.
 
@@ -17,6 +17,8 @@ We decided to use the 'GRE', 'TOEFL', and 'CGPA' features because those three fe
 Some problematic features were when we didn't have a certain feature for a subject. For example, in the given csv file, we have a missing feature in the Chance of Admit feature. We also have missing data from subjects about their race, so what our group did was we discarded the subjects that did not have all the data.
 
 The 'Race' feature was problematic as well because it was a categorical variable, so you should not carelessly assign values (such as 1, 2, etc.) to each category. If you do this, it will skew the coorelation values. The correlation matrix confirmed this, showing that none of the races had any correlation with 'Chance of Admit'.
+
+The only model that did not throw out these features was Naive Bayes because the Naive Bayes model assumes that all features are independent. Thus, the correlation between features is not important in determining whether or not to include them in the final model.
 
 ## Results
 
@@ -57,17 +59,25 @@ The 'Race' feature was problematic as well because it was a categorical variable
 
 #### Naive Bayes
 
-- Naive Bayes accuracy: 0.926108
-- Naive Bayes StdDev: (0.048931)
+##### Gaussian
 
-- Naive Bayes precision: 0.754275
-- Naive Bayes StdDev: (0.155794)
+- Naive Bayes accuracy: 0.943966
 
-- Naive Bayes recall: 0.904762
-- Naive Bayes StdDev: (0.145997)
+- Naive Bayes precision: 0.830379
 
-- Naive Bayes F1: 0.817904
-- Naive Bayes StdDev: (0.139074)
+- Naive Bayes recall: 0.923333
+
+- Naive Bayes F1: 0.866346
+
+##### Bernoulli
+
+- Naive Bayes accuracy: 0.905049
+
+- Naive Bayes precision: 0.694921
+
+- Naive Bayes recall: 0.970833
+
+- Naive Bayes F1: 0.801553
 
 ### Best Performing Model
 
@@ -89,7 +99,7 @@ The **SVM model** uses the linear kernal because it maximizes the metric scores.
 
 For the **KNN model**, we decided to have 5 neighbors. You can also see within the KNN file, there is a method that allows you to test plethora of values for the k value. There you can see that when k equals 5, all metrics are maximized. We also used the chebyshev distance metric for the model. With this metric, it gave us high metrics in all areas compared to the minkowski, manhattan, or euclidean distance metrics.
 
-The **Naive Bayes model** kept all the defaualt parameters (there were only two, and they were optional). It classified the chance of admission using the three features
+For the **Naive Bayes model**, the 5 options for models to use were: Gaussian, Bernoulli, Multinomial, Complement, and Categorical. Multinomial, Complement, and Categorical data can be ruled out immediately because they are meant for discrete datasets, which we clearly do not have. Bernoulli works similarly to Multinomial, but instead of assuming we have discrete features, it binarizes the data before fitting it. For that reason, we can try it out. Gaussian, on the other hand, works better with continuous data than the others. For the Gaussian model, the only two Looking at the results, the Gaussian model fared better in every metric we measured with the exception of recall. The Gaussian model most likely works better than Bernoulli because Bernoulli requires more transforming of the data. For scalers, MinMax, MaxAbs, and Normalizer caused errors because it led to divide by zero errors. The two scalers that worked the best were Standard and PowerTransformer scalers. They led to the same performance for the Gaussian NB, while Bernoulli NB performed slightly better (in particular, with the precision metric) with the Standard Scaler. For that reason, we chose to stick with the Standard Scaler for Naive Bayes. For additional hyperparameters for Gaussian NB, we have priors and var_smoothing. Priors are used if we have prior probabilities determined. Because we did not calculate any prior probabilities, we can just use the model to determine the probabilities. Changing the var_smooting parameter did not change the results, so it was left at the default value. For additional hyperparameters for the Bernoulli model, we have alpha, binarize, fit_prior, and class_prior. We don't chance fit_prior and class_prior for the same reason we didn't change the priors parameter. Changing alpha and binarize did nothing to the Bernoulli results, so we left them at their default values.
 
 ## Why can accuracy not be the most appropriate metric to make the sole decision by?
 
@@ -102,4 +112,4 @@ In total, we used accuracy, F1 score, precision score, and the recall score to a
 ### Resources
 
 - pandas API
-- skikit learn API
+- sklearn API
