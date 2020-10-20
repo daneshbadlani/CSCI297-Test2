@@ -8,8 +8,8 @@ import pandas as pd
 import matplotlib.pyplot as plt 
 from matplotlib.colors import ListedColormap
 import tensorflow as tf
-from sklearn.preprocessing import StandardScaler
-from sklearn.naive_bayes import GaussianNB
+from sklearn.preprocessing import StandardScaler, RobustScaler, Normalizer, PowerTransformer
+from sklearn.naive_bayes import GaussianNB, BernoulliNB
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn import model_selection
@@ -65,8 +65,14 @@ df.dropna(inplace=True)
 
 df.columns = ["No", "GRE", "TOEFL", "UR", "SOP", "LOR", "CGPA", "RES", "CoA", "RACE", "SES"]
 
+df_ohe = pd.get_dummies(df['RACE'])
+df = df[[i for i in list(df.columns) if i not in ['No', 'RACE']]]
+df.dropna(inplace=True)
+for race, column in zip(['Asian', 'african american', 'latinx', 'white'], df_ohe.columns):
+    df.insert(len(df.columns), race, df_ohe[race])
 
-X = df[['GRE', 'TOEFL', 'CGPA']]
+
+X = df[[i for i in list(df.columns) if i != 'CoA']]
 y = df['CoA']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state=1)
@@ -84,41 +90,43 @@ ty_train=np.array(ty_train)
 ty_test=[1 if CoA > 0.82 else 0 for CoA in y_test] #learned from internet
 ty_test=np.array(ty_test)
 
-nb = GaussianNB()
-nb.fit(X_train_std, ty_train)
-y_pred = nb.predict(X_test_std)
+#nb = GaussianNB()
+#nb = MultinomialNB()
+#nb = ComplementNB()
+#nb = BernoulliNB()
+#nb = CategoricalNB()
+for model in [GaussianNB, BernoulliNB]:
+    print()
+    print(model)
+    nb = model()
+    nb.fit(X_train_std, ty_train)
+    y_pred = nb.predict(X_test_std)
 
 
-X_combined_std = np.vstack((X_train_std[:, 1:], X_test_std[:, 1:]))
-y_combined = np.hstack((ty_train, ty_test))
-plot_decision_regions(X=X_combined_std, y=y_combined, classifier=GaussianNB())
-plt.savefig("nb.png")
-plt.show()
 
+    #Model Performance
+    # #setting performance parameters
+    kfold = model_selection.KFold(n_splits=10)
+    #calling the cross validation function
+    cv_results = model_selection.cross_val_score(model(), X_train_std, ty_train, cv=kfold, scoring='accuracy')
+    #displaying the mean and standard deviation of the prediction
+    print("%s: %f %s: (%f)" % ('Naive Bayes accuracy', cv_results.mean(), '\nNaive Bayes StdDev', cv_results.std()))
+    print()
+    #calling the cross validation function
+    cv_results = model_selection.cross_val_score(model(), X_train_std, ty_train, cv=kfold, scoring='precision')
+    #displaying the mean and standard deviation of the prediction
+    print("%s: %f %s: (%f)" % ('Naive Bayes precision', cv_results.mean(), '\nNaive Bayes StdDev', cv_results.std()))
+    print()
+    #calling the cross validation function
+    cv_results = model_selection.cross_val_score(model(), X_train_std, ty_train, cv=kfold, scoring='recall')
+    #displaying the mean and standard deviation of the prediction
+    print("%s: %f %s: (%f)" % ('Naive Bayes recall', cv_results.mean(), '\nNaive Bayes StdDev', cv_results.std()))
 
-#Model Performance
-# #setting performance parameters
-kfold = model_selection.KFold(n_splits=10)
-#calling the cross validation function
-cv_results = model_selection.cross_val_score(GaussianNB(), X_train_std, ty_train, cv=kfold, scoring='accuracy')
-#displaying the mean and standard deviation of the prediction
-print("%s: %f %s: (%f)" % ('Naive Bayes accuracy', cv_results.mean(), '\nNaive Bayes StdDev', cv_results.std()))
-print()
-#calling the cross validation function
-cv_results = model_selection.cross_val_score(GaussianNB(), X_train_std, ty_train, cv=kfold, scoring='precision')
-#displaying the mean and standard deviation of the prediction
-print("%s: %f %s: (%f)" % ('Naive Bayes precision', cv_results.mean(), '\nNaive Bayes StdDev', cv_results.std()))
-print()
-#calling the cross validation function
-cv_results = model_selection.cross_val_score(GaussianNB(), X_train_std, ty_train, cv=kfold, scoring='recall')
-#displaying the mean and standard deviation of the prediction
-print("%s: %f %s: (%f)" % ('Naive Bayes recall', cv_results.mean(), '\nNaive Bayes StdDev', cv_results.std()))
-
-print()
-#calling the cross validation function
-cv_results = model_selection.cross_val_score(GaussianNB(), X_train_std, ty_train, cv=kfold, scoring='f1')
-#displaying the mean and standard deviation of the prediction
-print("%s: %f %s: (%f)" % ('Naive Bayes F1', cv_results.mean(), '\nNaive Bayes StdDev', cv_results.std()))
+    print()
+    #calling the cross validation function
+    cv_results = model_selection.cross_val_score(model(), X_train_std, ty_train, cv=kfold, scoring='f1')
+    #displaying the mean and standard deviation of the prediction
+    print("%s: %f %s: (%f)" % ('Naive Bayes F1', cv_results.mean(), '\nNaive Bayes StdDev', cv_results.std()))
 # Naive Bayes accuracy: 0.926108 
 # Naive Bayes StdDev: (0.048931)
 
@@ -130,3 +138,9 @@ print("%s: %f %s: (%f)" % ('Naive Bayes F1', cv_results.mean(), '\nNaive Bayes S
 
 # Naive Bayes F1: 0.817904 
 # Naive Bayes StdDev: (0.139074)
+
+X_combined_std = np.vstack((X_train_std[:, 1:3], X_test_std[:, 1:3]))
+y_combined = np.hstack((ty_train, ty_test))
+plot_decision_regions(X=X_combined_std, y=y_combined, classifier=type(nb)())
+plt.savefig("nb.png")
+plt.show()
