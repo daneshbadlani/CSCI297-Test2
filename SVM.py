@@ -94,7 +94,7 @@ svc_pred = svm.predict(X_test_std)
 
 X_combined_std = np.vstack((X_train_std[:, 1:], X_test_std[:, 1:]))
 y_combined = np.hstack((ty_train, ty_test))
-plot_decision_regions(X=X_combined_std, y=y_combined, classifier=SVC(kernel='linear', C=2.0, random_state=1))
+plot_decision_regions(X=X_combined_std, y=y_combined, classifier=SVC(kernel='rbf', C=10.0, random_state=1))
 plt.savefig("svm.png")
 plt.show()
 
@@ -103,7 +103,7 @@ print("SVM Accuracy: %.3f" % accuracy_score(ty_test, svc_pred))
 print("SVM F1-Score: %.3f" % f1_score(ty_test, svc_pred))
 print("SVM Precision: %.3f" % precision_score(ty_test, svc_pred))
 print("SVM Recall: %.3f" % recall_score(ty_test, svc_pred))
-# SVM Accuracy: 0.944
-# SVM F1-Score: 0.920
-# SVM Precision: 0.958
-# SVM Recall: 0.885
+# SVM Accuracy: 0.958
+# SVM F1-Score: 0.941
+# SVM Precision: 0.960
+# SVM Recall: 0.923

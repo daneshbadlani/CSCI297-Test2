@@ -50,10 +50,10 @@ The only model that did not throw out these features was Naive Bayes because the
 
 #### SVM
 
-- SVM Accuracy: 0.944
-- SVM F1-Score: 0.920
-- SVM Precision: 0.958
-- SVM Recall: 0.885
+- SVM Accuracy: 0.958
+- SVM F1-Score: 0.941
+- SVM Precision: 0.960
+- SVM Recall: 0.923
 
 #### KNN
 
