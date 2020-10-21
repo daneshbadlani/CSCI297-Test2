@@ -86,7 +86,7 @@ For the **decision tree**, we decided to use the three features in classificatio
 
 In the **random forest**, we decided to use the 'entropy' criterion because it allowed us to maximize the metrics as compared to the 'gini' criterion. We used about 25 trees for the forest because adding too much seemed to lower the metric scores. Even though having a smaller value for the n_estimators did not change the metric scores, we decided against that because that may potentially cause our model to be overfitted. The random state does not matter. The n_jobs value did not change the scores, so we chose 2.
 
-The **SVM model** uses the default rbf kernel trick, which is a Gaussian kernel that provided us the best metrics overall to the level of logisitic regression. We also tried bunch of different C values, the regularization parameter, where 10.0 gave us the optimum results.  
+The **SVM model** uses the default rbf kernel trick, which is a Gaussian kernel that provided us the best metrics overall to the level of logisitic regression. We also tried bunch of different C values, the regularization parameter, where 10.0 gave us the optimal results.
 
 For the **KNN model**, we decided to have 5 neighbors. You can also see within the KNN file, there is a method that allows you to test plethora of values for the k value. There you can see that when k equals 5, all metrics are maximized. We also used the chebyshev distance metric for the model. With this metric, it gave us high metrics in all areas compared to the manhattan. Euclidean and chebyshev distance metrics performed the same though.
 
@@ -108,7 +108,7 @@ There was a large difference between random forest's scores: |precision (1.00) -
 
 With the **logistic regression model**, we used three features to help with the classification of admission. We decided on a C value of 100 because that allowed us to maximize the metrics, and C at 100 was a balance between allowing points to be erroneous but not having too many. The random state of the model does not matter. The type of algorithm used to optimize the model did not matter much because out of the four algorithms the model could use (newton-cg, sag, saga, lbfgs), due to the multiple features being considered, they all concluded with the same metric scores, and we chose 'lbfgs' in the end. We also chose a multi-class option of 'ovr' because we want to classify a binary value (admitted or not) for each feature that was considered.
 
-SVM and logistic regression did have the same performance across the four metrics that we measured, but we determined that logisitc regression is the better model to use over SVM because it is a less computationally expensive model. This decision could be re-evaluated if we gather more data and find that SVM is a better algorithm to use.
+SVM and logistic regression did have the same performance across the four metrics that we measured, but we determined that logisitc regression is the better model to use over SVM because it is a less computationally expensive model. This decision could be re-evaluated if we gather more data and find that SVM yields better results.
 
 ### Resources
 
