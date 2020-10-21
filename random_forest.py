@@ -102,7 +102,7 @@ print("Random Forest Accuracy: %.3f" % accuracy_score(ty_test, rf_pred))
 print("Random Forest F1-Score: %.3f" % f1_score(ty_test, rf_pred))
 print("Random Forest Precision: %.3f" % precision_score(ty_test, rf_pred))
 print("Random Forest Recall: %.3f" % recall_score(ty_test, rf_pred))
-# Random Forest Accuracy: 0.944
-# Random Forest F1-Score: 0.920
-# Random Forest Precision: 0.958
+# Random Forest Accuracy: 0.958
+# Random Forest F1-Score: 0.939
+# Random Forest Precision: 1.000
 # Random Forest Recall: 0.885
