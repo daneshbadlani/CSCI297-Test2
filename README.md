@@ -99,7 +99,7 @@ For the **decision tree**, we decided to use the three features in classificatio
 
 In the **random forest**, we decided to use the 'entropy' criterion because it allowed us to maximize the metrics as compared to the 'gini' criterion. We used about 25 trees for the forest because adding too much seemed to lower the metric scores. Even though having a smaller value for the n_estimators did not change the metric scores, we decided against that because that may potentially cause our model to be overfitted. The random state does not matter. The n_jobs value did not change the scores, so we chose 2.
 
-The **SVM model** uses the linear kernal because it maximizes the metric scores. The other kernels lowered the metrics significantly. The C value of the SVM did not change the metrics at all, so we chose a value of 2.
+The **SVM model** uses the default rbf kernel trick, which is a Gaussian kernel that provided us the best metrics overall to the level of logisitic regression. We also tried bunch of different C values, the regularization parameter, where 10.0 gave us the optimum results.  
 
 For the **KNN model**, we decided to have 5 neighbors. You can also see within the KNN file, there is a method that allows you to test plethora of values for the k value. There you can see that when k equals 5, all metrics are maximized. We also used the chebyshev distance metric for the model. With this metric, it gave us high metrics in all areas compared to the manhattan. Euclidean and chebyshev distance metrics performed the same though. 
 
