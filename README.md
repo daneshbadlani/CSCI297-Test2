@@ -10,7 +10,7 @@ We decided to categorize the 'Race' feature using pandas' get_dummies method whi
 
 ## EDA
 
-There was some missing data and we decided to remove all the missing values using dropna method because we wanted to keep only original values instead of imputating it. After removing all the missing values, we were left with 356 rows to deal with eradicating only about 10% of initial data. We found out that there was a positive corelation between 'GRE' and 'TOEFL' scores as well as 'GRE' and 'CGPA'. We decided to use the 'GRE', 'TOEFL', and 'CGPA' features for our models because those three features were the most highly coorelated features compared to the others with 'Chance of Admit', with the coorelation scores of 0.80, 0.79 and 0.87 respectively. We split the dataset into 80% train data and 20% test data using the train_test_split function because it eventually ended giving us better overall results for different models. We also used the Standard Scaler to standardize our data for some of the models because the distribution is normal as shown in scatterplot. 
+There was some missing data and we decided to remove all the missing values using dropna method because we wanted to keep only original values instead of imputating it. After removing all the missing values, we were left with 356 rows to deal with eradicating only about 10% of initial data. We found out that there was a positive corelation between 'GRE' and 'TOEFL' scores as well as 'GRE' and 'CGPA'. We decided to use the 'GRE', 'TOEFL', and 'CGPA' features for our models because those three features were the most highly coorelated features compared to the others with 'Chance of Admit', with the coorelation scores of 0.80, 0.79 and 0.87 respectively. We split the dataset into 80% train data and 20% test data using the train_test_split function because it eventually ended giving us better overall results for different models. We also used the Standard Scaler to standardize our data for some of the models because the distribution is normal as shown in scatterplot.
 
 ### Problematic or Biased Features?
 
@@ -21,6 +21,7 @@ The only model that did not throw out these features was Naive Bayes because the
 ## Results
 
 #### Linear Regression
+
 - Slope: 0.002
 - Intercept: -1.606
 - R^2 Score: 0.776
@@ -66,22 +67,16 @@ The only model that did not throw out these features was Naive Bayes because the
 ##### Gaussian
 
 - Naive Bayes accuracy: 0.943966
-
-- Naive Bayes precision: 0.830379
-
-- Naive Bayes recall: 0.923333
-
 - Naive Bayes F1: 0.866346
+- Naive Bayes precision: 0.830379
+- Naive Bayes recall: 0.923333
 
 ##### Bernoulli
 
 - Naive Bayes accuracy: 0.905049
-
-- Naive Bayes precision: 0.694921
-
-- Naive Bayes recall: 0.970833
-
 - Naive Bayes F1: 0.801553
+- Naive Bayes precision: 0.694921
+- Naive Bayes recall: 0.970833
 
 ### Best Performing Model
 
@@ -101,7 +96,7 @@ In the **random forest**, we decided to use the 'entropy' criterion because it a
 
 The **SVM model** uses the linear kernal because it maximizes the metric scores. The other kernels lowered the metrics significantly. The C value of the SVM did not change the metrics at all, so we chose a value of 2.
 
-For the **KNN model**, we decided to have 5 neighbors. You can also see within the KNN file, there is a method that allows you to test plethora of values for the k value. There you can see that when k equals 5, all metrics are maximized. We also used the chebyshev distance metric for the model. With this metric, it gave us high metrics in all areas compared to the manhattan. Euclidean and chebyshev distance metrics performed the same though. 
+For the **KNN model**, we decided to have 5 neighbors. You can also see within the KNN file, there is a method that allows you to test plethora of values for the k value. There you can see that when k equals 5, all metrics are maximized. We also used the chebyshev distance metric for the model. With this metric, it gave us high metrics in all areas compared to the manhattan. Euclidean and chebyshev distance metrics performed the same though.
 
 For the **Naive Bayes model**, the 5 options for models to use were: Gaussian, Bernoulli, Multinomial, Complement, and Categorical. Multinomial, Complement, and Categorical data can be ruled out immediately because they are meant for discrete datasets, which we clearly do not have. Bernoulli works similarly to Multinomial, but instead of assuming we have discrete features, it binarizes the data before fitting it. For that reason, we can try it out. Gaussian, on the other hand, works better with continuous data than the others. For the Gaussian model, the only two Looking at the results, the Gaussian model fared better in every metric we measured with the exception of recall. The Gaussian model most likely works better than Bernoulli because Bernoulli requires more transforming of the data. For scalers, MinMax, MaxAbs, and Normalizer caused errors because it led to divide by zero errors. The two scalers that worked the best were Standard and PowerTransformer scalers. They led to the same performance for the Gaussian NB, while Bernoulli NB performed slightly better (in particular, with the precision metric) with the Standard Scaler. For that reason, we chose to stick with the Standard Scaler for Naive Bayes. For additional hyperparameters for Gaussian NB, we have priors and var_smoothing. Priors are used if we have prior probabilities determined. Because we did not calculate any prior probabilities, we can just use the model to determine the probabilities. Changing the var_smooting parameter did not change the results, so it was left at the default value. For additional hyperparameters for the Bernoulli model, we have alpha, binarize, fit_prior, and class_prior. We don't chance fit_prior and class_prior for the same reason we didn't change the priors parameter. Changing alpha and binarize did nothing to the Bernoulli results, so we left them at their default values.
 
