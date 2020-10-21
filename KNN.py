@@ -104,7 +104,7 @@ ty_train=np.array(ty_train)
 ty_test=[1 if CoA > 0.82 else 0 for CoA in y_test] #learned from internet
 ty_test=np.array(ty_test)
 
-knn = KNeighborsClassifier(n_neighbors=5, p=2, metric='chebyshev')
+knn = KNeighborsClassifier(n_neighbors=5, metric='chebyshev')
 knn.fit(X_train_std, ty_train)
 knn_pred = knn.predict(X_test_std)
 print("k = 5")
