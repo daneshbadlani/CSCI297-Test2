@@ -65,7 +65,7 @@ def plot_decision_regions(X, y, classifier, test_idx=None, resolution=0.02):
 
 def knn_multiple():
     for i in [1,2,3,4,5,6,7,8,9,10,25,50,95]:
-        knn = KNeighborsClassifier(n_neighbors=i, p=2, metric='chebyshev')
+        knn = KNeighborsClassifier(n_neighbors=i, metric='chebyshev')
         knn.fit(X_train_std, ty_train)
         knn_pred = knn.predict(X_test_std)
         print()

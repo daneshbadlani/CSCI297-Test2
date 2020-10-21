@@ -86,7 +86,7 @@ For the **decision tree**, we decided to use the three features in classificatio
 
 In the **random forest**, we decided to use the 'entropy' criterion because it allowed us to maximize the metrics as compared to the 'gini' criterion. We used about 25 trees for the forest because adding too much seemed to lower the metric scores. Even though having a smaller value for the n_estimators did not change the metric scores, we decided against that because that may potentially cause our model to be overfitted. The random state does not matter. The n_jobs value did not change the scores, so we chose 2.
 
-The **SVM model** uses the linear kernal because it maximizes the metric scores. The other kernels lowered the metrics significantly. The C value of the SVM did not change the metrics at all, so we chose a value of 2.
+The **SVM model** uses the default rbf kernel trick, which is a Gaussian kernel that provided us the best metrics overall to the level of logisitic regression. We also tried bunch of different C values, the regularization parameter, where 10.0 gave us the optimum results.  
 
 For the **KNN model**, we decided to have 5 neighbors. You can also see within the KNN file, there is a method that allows you to test plethora of values for the k value. There you can see that when k equals 5, all metrics are maximized. We also used the chebyshev distance metric for the model. With this metric, it gave us high metrics in all areas compared to the manhattan. Euclidean and chebyshev distance metrics performed the same though.
 
@@ -94,7 +94,7 @@ For the **Naive Bayes model**, the 5 options for models to use were: Gaussian, B
 
 ## Why can accuracy not be the most appropriate metric to make the sole decision by?
 
-Accuracy should not be the sole metric you sue to decide which model performs the best against others. Accuracy is very dependent on the data you are processing, so if you have a dataset that leans heavily towards one class during training and testing, the model will have a high accuracy as a result of the skewed data. To get the best results for accuracy, you would want a balanced data set, however, that is not always possible.
+Accuracy should not be the sole metric you use to decide which model performs the best against others. Accuracy is very dependent on the data you are processing, so if you have a dataset that leans heavily towards one class during training and testing, the model will have a high accuracy as a result of the skewed data. To get the best results for accuracy, you would want a balanced data set, however, that is not always possible.
 
 Accuracy is also an easy metric to alter. For example, if the threshold were to be adjusted, one way or the other, predictions that were previously classified as a certain class may change to another. This change across the entire dataset will change the accuracy. One would be able to fib their comparisons between models if they only used accuracy and adjusted the threshold of a singular model in a favorable way.
 

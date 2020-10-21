@@ -94,7 +94,7 @@ rf_pred = forest.predict(X_test)
 
 X_combined_std = np.vstack((X_train[['CGPA', 'TOEFL']], X_test[['CGPA', 'TOEFL']]))
 y_combined = np.hstack((ty_train, ty_test))
-plot_decision_regions(X=X_combined_std, y=y_combined, classifier=RandomForestClassifier(criterion='gini', n_estimators=25, random_state=1, n_jobs=2))
+plot_decision_regions(X=X_combined_std, y=y_combined, classifier=RandomForestClassifier(criterion='entropy', n_estimators=25, random_state=1, n_jobs=2))
 plt.savefig("random_forest.png")
 plt.show()
 
