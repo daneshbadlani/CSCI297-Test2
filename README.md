@@ -112,5 +112,6 @@ SVM and logistic regression did have the same performance across the four metric
 
 ### Resources
 
+- M. S. Acharya, A. Armaan and A. S. Antony, "A Comparison of Regression Models for Prediction of Graduate Admissions," 2019 International Conference on Computational Intelligence in Data Science (ICCIDS), Chennai, India, 2019, pp. 1-5, doi: 10.1109/ICCIDS.2019.8862140.
 - pandas API
 - sklearn API
