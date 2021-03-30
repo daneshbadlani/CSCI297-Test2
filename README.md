@@ -1,4 +1,4 @@
-# CSCI297-Test2
+# Graduate Admission Prediction
 
 Danesh Badlani, Sam Bluestone, and Leslie Le
 
